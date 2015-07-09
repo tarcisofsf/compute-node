@@ -1,0 +1,18 @@
+# install Centos Core
+yum groupinstall core --installroot=/root/compute-image/ --releasever=7
+
+#CHROOT
+
+mount -o bind /sys compute-image/sys/
+mount -o bind /proc/ compute-image/proc/
+mount -o bind /dev/ compute-image/dev
+chroot /root/compute-image
+
+#install rdo-repo
+yum install -y https://rdoproject.org/repos/rdo-release.rpm
+#install packstack
+yum install -y openstack-packstack
+#using packstack
+packstack --answer-file=compute-node-config
+
+CONTINUE...
